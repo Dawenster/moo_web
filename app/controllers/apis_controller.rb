@@ -37,6 +37,17 @@ class ApisController < ApplicationController
     end
   end
 
+  def get_username
+    respond_to do |format|
+      user = User.find_by_uuid(params[:uuid])
+      if user
+        format.json { render :json => { :username => user.username } }
+      else
+        format.json { render :json => { :username => "" } }
+      end
+    end
+  end
+
   def update_username
     respond_to do |format|
       user = User.find_by_uuid(params[:user_params][:uuid])
