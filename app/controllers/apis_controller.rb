@@ -37,6 +37,18 @@ class ApisController < ApplicationController
     end
   end
 
+  def update_username
+    respond_to do |format|
+      user = User.find_by_uuid(params[:user_params][:uuid])
+      if user
+        user.update_attributes(:username => params[:user_params][:username])
+      else
+        User.create(user_params)
+      end
+      format.json { render :json => { :status => "Great success!" } }
+    end
+  end
+
   private
 
   def allow_cors
