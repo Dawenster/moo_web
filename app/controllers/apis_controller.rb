@@ -3,6 +3,18 @@ class ApisController < ApplicationController
 
   before_filter :allow_cors
 
+  def fetch_records
+    respond_to do |format|
+      user = User.find_by_uuid(params[:uuid])
+      if user
+        data = user.games.as_json(:include => :attempts)
+        format.json { render :json => { :data => data } }
+      else
+        format.json { render :json => { :data => {} } }
+      end
+    end
+  end
+
   def create_record
     respond_to do |format|
       user = User.find_by_uuid(params[:user_params][:uuid])
