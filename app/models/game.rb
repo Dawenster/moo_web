@@ -5,14 +5,27 @@ class Game < ActiveRecord::Base
   scope :won, -> { where(:result => "win") }
 
   def self.fastest_by_digit(num)
-    fastest = {}
+    fastest = []
+    count = 0
     (1..7).each do |digit|
       games = Game.won.where(:digits => digit)
       games = games.sort_by{|game| game.time}.reverse.first(num)
-      games = games.map do |game|
-        [game.user.username, game.answer, game.time] if game.user
+      if games.any?
+        fastest << {
+          "digit" => digit,
+          "array" => []
+        }
+        games.map do |game|
+          if game.user
+            fastest[count]["array"] << {
+              "username" => game.user.username,
+              "answer" => game.answer,
+              "time" => game.time
+            }
+          end
+        end
+        count += 1
       end
-      fastest[digit] = games
     end
     return fastest
   end
