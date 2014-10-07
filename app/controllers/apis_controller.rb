@@ -57,7 +57,7 @@ class ApisController < ApplicationController
           :high_scores => User.high_scores(3),
           :fastest_by_digit => Game.fastest_by_digit(3)
         }
-        format.json { render :json => { data } }
+        format.json { render :json => data }
       else
         format.json { render :json => {} }
       end
