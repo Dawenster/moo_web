@@ -41,9 +41,9 @@ class ApisController < ApplicationController
     respond_to do |format|
       user = User.find_by_uuid(params[:uuid])
       if user
-        format.json { render :json => { :score => user.score } }
+        format.json { render :json => { :username => user.username } }
       else
-        format.json { render :json => { :score => 0 } }
+        format.json { render :json => { :username => "" } }
       end
     end
   end
@@ -52,9 +52,9 @@ class ApisController < ApplicationController
     respond_to do |format|
       user = User.find_by_uuid(params[:uuid])
       if user
-        format.json { render :json => { :username => user.username } }
+        format.json { render :json => { :score => user.score } }
       else
-        format.json { render :json => { :username => "" } }
+        format.json { render :json => { :score => 0 } }
       end
     end
   end
