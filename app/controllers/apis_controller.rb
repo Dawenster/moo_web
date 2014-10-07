@@ -54,7 +54,8 @@ class ApisController < ApplicationController
       if user
         data = {
           :score => user.score,
-          :high_scores => User.high_scores(2)
+          :high_scores => User.high_scores(3),
+          :fastest_by_digit => Game.fastest_by_digit(3)
         }
         format.json { render :json => { data } }
       else
