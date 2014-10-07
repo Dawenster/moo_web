@@ -9,7 +9,7 @@ class Game < ActiveRecord::Base
     count = 0
     (1..7).each do |digit|
       games = Game.won.where(:digits => digit)
-      games = games.sort_by{|game| game.time}.reverse.first(num)
+      games = games.sort_by{|game| game.time}.first(num)
       if games.any?
         fastest << {
           "digit" => digit,
