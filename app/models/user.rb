@@ -10,13 +10,14 @@ class User < ActiveRecord::Base
   end
 
   def self.high_scores(num)
-    winners = {}
-    Game.won.each do |game|
-      user_info_array = [game.user_id, game.user.username]
-      winners[user_info_array] ||= 0
-      winners[user_info_array] += game.answer.to_i
+    winners = []
+    users = User.all.sort_by{|user| user.score}.reverse.first(num)
+    users.each do |user|
+      winners << {
+        "username" => user.username,
+        "score" => user.score
+      }
     end
-    limit = num - 1
-    return Hash[winners.sort_by { |k,v| -v }[0..limit]]
+    return winners
   end
 end
