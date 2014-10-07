@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   def score
     score = 0
-    Game.where(:result => "win", :user_id => self.id).each do |game|
+    Game.won.where(:user_id => self.id).each do |game|
       score += game.answer.to_i
     end
     return score || 0
