@@ -51,16 +51,13 @@ class ApisController < ApplicationController
   def get_score
     respond_to do |format|
       user = User.find_by_uuid(params[:uuid])
-      if user
-        data = {
-          :score => user.score,
-          :high_scores => User.high_scores(3),
-          :fastest_by_digit => Game.fastest_by_digit(3)
-        }
-        format.json { render :json => data }
-      else
-        format.json { render :json => {} }
-      end
+      score = user ? user.score : 0
+      data = {
+        :score => score,
+        :high_scores => User.high_scores(3),
+        :fastest_by_digit => Game.fastest_by_digit(3)
+      }
+      format.json { render :json => data }
     end
   end
 
